@@ -44,29 +44,37 @@ let currentCipherType = "تشفير"; // Default cipher type
 // Morse Code Map (Custom per User Request)
 const MORSE_MAP = {
     // English
-    'a': '.-', 'b': '-...', 'c': '-.-.', 'd': '-..', 'e': '.', 'f': '..-.',
-    'g': '--.', 'h': '....', 'i': '..', 'j': '.---', 'k': '-.-', 'l': '.-..',
-    'm': '--', 'n': '-.', 'o': '---', 'p': '.--.', 'q': '--.-', 'r': '.-.',
-    's': '...', 't': '-', 'u': '..-', 'v': '...-', 'w': '.--', 'x': '-..-',
-    'y': '-.--', 'z': '--..',
-    // Numbers
-    '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-',
-    '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.',
-    // Punctuation
-    '.': '.-.-.-', ',': '--..--', '?': '..--..', '!': '-.-.--',
-    '-': '-....-', '(': '-.--.-', ')': '-.--.-', '@': '.--.-.',
-    '/': '-..-.', ' ': '/', // Map space to slash for word break
+    a: '.-', b: '-...', c: '-.-.', d: '-..', e: '.', f: '..-.',
+    g: '--.', h: '....', i: '..', j: '.---', k: '-.-', l: '.-..',
+    m: '--', n: '-.', o: '---', p: '.--.', q: '--.-', r: '.-.',
+    s: '...', t: '-', u: '..-', v: '...-', w: '.--', x: '-..-',
+    y: '-.--', z: '--..',
 
-    // Arabic (Specific User Mapping)
-    'أ': '.-', 'إ': '.-', 'آ': '.-', 'ا': '.-',
-    'ب': '-...', 'ت': '-', 'ث': '-.-.', 'ج': '.--.',
-    'ح': '....', 'خ': '---', 'د': '-..', 'ذ': '--.',
-    'ر': '.-.', 'ز': '--..', 'س': '...', 'ش': '----',
-    'ص': '-.-.-', 'ض': '-..-', 'ط': '..-', 'ظ': '-.--',
-    'ع': '.-.-', 'غ': '--.-', 'ف': '..-.', 'ق': '--.-',
-    'ك': '-.-', 'ل': '.-..', 'م': '--', 'ن': '-.',
-    'ه': '..-..', 'ة': '..-..', 'و': '.--', 'ؤ': '.--',
-    'ي': '..', 'ى': '..', 'ئ': '..'
+    // Arabic (ITU)
+    'ا': '.-', 'أ': '.-',
+    'ب': '-...', 'ت': '-', 'ث': '-.-.',
+    'ج': '.---', 'ح': '....', 'خ': '---',
+    'د': '-..', 'ذ': '--..',
+    'ر': '.-.', 'ز': '---.',
+    'س': '...', 'ش': '----',
+    'ص': '-..-', 'ض': '...-',
+    'ط': '..-', 'ظ': '-.--',
+    'ع': '.-.-', 'غ': '--.',
+    'ف': '..-.', 'ق': '--.-',
+    'ك': '-.-', 'ل': '.-..',
+    'م': '--', 'ن': '-.',
+    'ه': '....', 'ة': '....',
+    'و': '.--', 'ي': '..',
+    'ء': '.',
+
+    // Numbers
+    '0': '-----', '1': '.----', '2': '..---', '3': '...--',
+    '4': '....-', '5': '.....', '6': '-....',
+    '7': '--...', '8': '---..', '9': '----.',
+
+    // Symbols
+    '.': '.-.-.-', ',': '--..--', '?': '..--..', '!': '-.-.--',
+    '-': '-....-', '/': '-..-.', ' ': '/'
 };
 
 async function fetchMessages() {
@@ -297,17 +305,26 @@ function updateDisplay(text) {
         DISPLAY_ELEMENT.textContent = text;
         DISPLAY_ELEMENT.style.setProperty('--text-direction', 'ltr');
 
-        // Dynamic Font Sizing
-        // Reset first
-        DISPLAY_ELEMENT.style.fontSize = '2.5rem';
+        // Dynamic Font Sizing - More aggressive for mobile
+        const isMobile = window.innerWidth < 768;
+        let baseFontSize = isMobile ? '1.8rem' : '2.5rem';
+
+        DISPLAY_ELEMENT.style.fontSize = baseFontSize;
         DISPLAY_ELEMENT.style.lineHeight = '1.3';
 
-        if (text.length > 50) {
-            DISPLAY_ELEMENT.style.fontSize = '1.8rem';
+        // Scale down based on text length
+        if (text.length > 40) {
+            DISPLAY_ELEMENT.style.fontSize = isMobile ? '1.4rem' : '1.8rem';
             DISPLAY_ELEMENT.style.lineHeight = '1.2';
         }
-        if (text.length > 100) {
-            DISPLAY_ELEMENT.style.fontSize = '1.4rem';
+        if (text.length > 80) {
+            DISPLAY_ELEMENT.style.fontSize = isMobile ? '1.1rem' : '1.4rem';
+        }
+        if (text.length > 120) {
+            DISPLAY_ELEMENT.style.fontSize = isMobile ? '0.9rem' : '1.2rem';
+        }
+        if (text.length > 180) {
+            DISPLAY_ELEMENT.style.fontSize = isMobile ? '0.75rem' : '1rem';
         }
 
     } else {
