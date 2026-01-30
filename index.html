@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pager Spy Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for arrows -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="pager-case">
+        <!-- Mute Button -->
+        <div class="mute-btn" id="mute-btn">
+            <i class="fas fa-volume-up" id="mute-icon"></i>
+        </div>
+
+        <!-- Top Screen Section -->
+        <div class="screen-bezel">
+            <div class="lcd-screen">
+                <div id="message-display" class="scrolling-text">جاري الاتصال...</div>
+                <div id="countdown-timer" class="countdown-timer"></div>
+            </div>
+        </div>
+
+        <!-- Bottom Controls Section -->
+        <div class="controls-area">
+            <div class="left-controls">
+                <div class="function-buttons">
+                    <div class="btn-pill green-btn"></div>
+                    <div class="btn-pill red-btn"></div>
+                </div>
+                <div class="branding">
+                    <span class="brand-icon">D</span>
+                    <span class="brand-text">тьма</span>
+                </div>
+            </div>
+
+            <div class="right-controls">
+                <div class="d-pad">
+                    <div class="d-btn up"><i class="fas fa-caret-up"></i></div>
+                    <div class="d-btn left"><i class="fas fa-caret-left"></i></div>
+                    <div class="d-btn right"><i class="fas fa-caret-right"></i></div>
+                    <div class="d-btn down"><i class="fas fa-caret-down"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decoration lines/grooves -->
+        <div class="speaker-grill"></div>
+
+        <!-- Keyboard Shortcuts Hint -->
+        <div class="shortcuts-hint">R = تحديث | C = نسخ</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

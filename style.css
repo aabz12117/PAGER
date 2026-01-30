@@ -1,0 +1,440 @@
+/* Reset and Body */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #111;
+    font-family: 'VT323', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Main Pager Case */
+.pager-case {
+    width: 580px;
+    height: 380px;
+    background: #222;
+    border-radius: 25px;
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.8),
+        inset 0 2px 3px rgba(255, 255, 255, 0.1),
+        inset 0 -5px 10px rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    /* Plastic Texture Simulation */
+    background-image:
+        radial-gradient(circle at 50% 0%, #333, #1a1a1a);
+}
+
+/* Screen Area */
+.screen-bezel {
+    background: #111;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow:
+        inset 0 2px 5px rgba(255, 255, 255, 0.1),
+        0 2px 2px rgba(255, 255, 255, 0.05);
+    /* Highlight beveled edge */
+    margin-bottom: 25px;
+    height: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* The actual LCD Green Screen */
+.lcd-screen {
+    width: 100%;
+    height: 100%;
+    background-color: #6b8c64;
+    /* Classic Pager Green */
+    border-radius: 4px;
+    box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    /* RTL Layout for the text container */
+    justify-content: flex-end;
+    padding: 15px;
+    box-sizing: border-box;
+    position: relative;
+
+    font-size: 2.2rem;
+    color: #1a2416;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+
+    /* Pixel Grid Texture */
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+    background-size: 4px 4px;
+    overflow-y: auto;
+    /* Allow scrolling for long text */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.lcd-screen::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+}
+
+/* Message Text */
+#message-display {
+    width: 100%;
+    direction: var(--text-direction, rtl);
+    /* Dynamic based on content */
+    text-align: center;
+    /* Center align looks better for codes usually */
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    /* Break at spaces/hyphens naturally */
+    line-height: 1.3;
+    font-family: 'VT323', monospace;
+    font-size: 2.5rem;
+    /* Larger and clearer */
+    letter-spacing: 4px;
+    /* Distinct separation */
+    font-weight: bold;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
+    /* Etched look */
+}
+
+/* Controls Area */
+.controls-area {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 10px;
+}
+
+/* Left Side: Buttons + Brand */
+.left-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.function-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-pill {
+    width: 35px;
+    height: 18px;
+    border-radius: 4px;
+    box-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.5),
+        0 5px 5px rgba(0, 0, 0, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    /* Interaction */
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.btn-pill:active {
+    transform: translateY(2px);
+    box-shadow:
+        0 1px 0 rgba(0, 0, 0, 0.5),
+        0 2px 3px rgba(0, 0, 0, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.green-btn {
+    background: #4a6d45;
+    /* Darker green plastic */
+    background-image: linear-gradient(#5a8d55, #3a5d35);
+}
+
+.red-btn {
+    background: #8b3a3a;
+    /* Darker red plastic */
+    background-image: linear-gradient(#a34a4a, #7b2a2a);
+}
+
+/* Branding */
+.branding {
+    font-family: 'Arial', sans-serif;
+    /* Clean sans */
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    /* Align slightly up */
+    opacity: 0.7;
+}
+
+.brand-icon {
+    border: 1px solid #777;
+    border-radius: 3px;
+    padding: 0 4px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.brand-text {
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+/* Right Side: D-Pad */
+.d-pad {
+    position: relative;
+    width: 120px;
+    height: 80px;
+    /* D-pad shape usually oval or custom area */
+    background: #181818;
+    border-radius: 40px;
+    box-shadow:
+        inset 0 2px 5px rgba(0, 0, 0, 0.8),
+        0 1px 0 rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 5px 15px;
+}
+
+.d-btn {
+    color: #666;
+    font-size: 12px;
+    cursor: default;
+    /* Triangle shapes roughly */
+    width: 0;
+    height: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Actually, the image shows distinct triangular buttons sticking out, or a rocker? 
+   Let's make them real buttons for visual fidelity. */
+.d-btn {
+    width: auto;
+    height: auto;
+    background: transparent;
+    color: #bbb;
+    text-shadow: 0 -1px 0 #000;
+    font-size: 16px;
+}
+
+/* Let's style them as physical buttons on the pad */
+.d-pad {
+    /* Retrying shape to match image better */
+    /* Image shows 4 buttons arranged: Left, Up, Down, Right? Or just a cluster. */
+    /* Reference image: "1-23-18..." 
+       The buttons looks like:
+       [ - ] [ - ] (Left side)
+       (    ^    )
+       ( <     > )  (Right side cluster)
+       (    v    )
+       
+       Actually the image shows:
+       Left side specific buttons.
+       Right side: 4 triangular buttons in a diamond or cross layout.
+    */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 5px;
+    width: auto;
+    height: auto;
+    background: transparent;
+    box-shadow: none;
+}
+
+.d-btn {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    cursor: pointer;
+    /* Interaction enabled */
+    filter: drop-shadow(0 2px 1px rgba(0, 0, 0, 0.5));
+    transition: transform 0.1s;
+    touch-action: manipulation;
+    /* Mobile friendly */
+}
+
+/* Active State for feedback */
+.d-btn:active {
+    transform: scale(0.9);
+    filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.5));
+}
+
+/* Up Arrow */
+.d-btn.up {
+    grid-column: 2;
+    grid-row: 1;
+    border-width: 0 10px 14px 10px;
+    border-color: transparent transparent #333 transparent;
+}
+
+.d-btn.up:active {
+    border-bottom-color: #222;
+    transform: translateY(1px);
+}
+
+/* Left Arrow */
+.d-btn.left {
+    grid-column: 1;
+    grid-row: 2;
+    border-width: 10px 14px 10px 0;
+    border-color: transparent #333 transparent transparent;
+}
+
+/* Right Arrow */
+.d-btn.right {
+    grid-column: 3;
+    grid-row: 2;
+    border-width: 10px 0 10px 14px;
+    border-color: transparent transparent transparent #333;
+}
+
+/* Down Arrow */
+.d-btn.down {
+    grid-column: 2;
+    grid-row: 2;
+    border-width: 14px 10px 0 10px;
+    border-color: #333 transparent transparent transparent;
+}
+
+/* Add highlight to buttons */
+.d-btn i {
+    display: none;
+}
+
+/* Using CSS borders for shape, hide icons */
+
+/* Adjust colors for D-Pad buttons to look like grey plastic */
+.d-btn.up {
+    border-bottom-color: #444;
+}
+
+.d-btn.left {
+    border-right-color: #444;
+}
+
+.d-btn.right {
+    border-left-color: #444;
+}
+
+.d-btn.down {
+    border-top-color: #444;
+}
+
+
+/* Speaker Grille lines (top right or bottom?) */
+/* Image doesn't clearly show speaker. Usually top. */
+
+/* Mute Button - Realistic Physical Style */
+.mute-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    background: #2a2a2a;
+    background-image: linear-gradient(135deg, #3a3a3a 0%, #1a1a1a 100%);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #5a8d55;
+    font-size: 10px;
+    transition: all 0.1s;
+    z-index: 10;
+    /* 3D Effect */
+    box-shadow:
+        0 3px 0 #111,
+        0 4px 4px rgba(0, 0, 0, 0.5),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    border: 1px solid #333;
+}
+
+.mute-btn:hover {
+    background-image: linear-gradient(135deg, #444 0%, #222 100%);
+}
+
+.mute-btn:active {
+    transform: translateY(2px);
+    box-shadow:
+        0 1px 0 #111,
+        0 2px 2px rgba(0, 0, 0, 0.5),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.mute-btn.muted {
+    color: #8b3a3a;
+    background-image: linear-gradient(135deg, #333 0%, #1a1a1a 100%);
+}
+
+.mute-btn.muted::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 14px;
+    background: #8b3a3a;
+    transform: rotate(45deg);
+    border-radius: 1px;
+}
+
+/* Countdown Timer */
+.countdown-timer {
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+    font-size: 0.9rem;
+    color: #3a5a35;
+    font-family: 'VT323', monospace;
+    opacity: 0.8;
+    direction: ltr;
+}
+
+.countdown-timer.warning {
+    color: #7a3a3a;
+    animation: blink 0.5s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+/* Keyboard Shortcuts Hint */
+.shortcuts-hint {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #555;
+    font-family: 'VT323', monospace;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    direction: rtl;
+}
+
+/* LCD Screen - add flex-wrap for countdown positioning */
+.lcd-screen {
+    flex-wrap: wrap;
+    align-content: center;
+}
