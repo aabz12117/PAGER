@@ -36,6 +36,14 @@ const SYMBOL_MAP = {
     '🔒': 'S56', '🔓': 'S57', '📡': 'S58', '🧨': 'S59'
 };
 
+// Arabic letters mapped to sequential numbers for "ارقام" cipher
+const ARABIC_NUMBER_MAP = {
+    'ا': '1', 'ب': '2', 'ت': '3', 'ث': '4', 'ج': '5', 'ح': '6', 'خ': '7',
+    'د': '8', 'ذ': '9', 'ر': '10', 'ز': '11', 'س': '12', 'ش': '13', 'ص': '14',
+    'ض': '15', 'ط': '16', 'ظ': '17', 'ع': '18', 'غ': '19', 'ف': '20', 'ق': '21',
+    'ك': '22', 'ل': '23', 'م': '24', 'ن': '25', 'ه': '26', 'و': '27', 'ي': '28'
+};
+
 const DISPLAY_ELEMENT = document.getElementById('message-display');
 const DEFAULT_TEXT = 'لا توجد رسائل واردة';
 let currentOriginalText = ""; // Store for secret reveal
@@ -212,19 +220,29 @@ function processMessage(text, dateStr, ctype = 'تشفير') {
         let effectiveType = ctype ? ctype.toString().trim().toLowerCase() : '';
         let processText = text;
 
-        // FAILSAFE: Check if text starts with "morse:" or "مورس:" to force mode
+        // FAILSAFE: Check if text starts with "morse:/مورس:" or "ارقام:" to force mode
         if (processText.startsWith('morse:') || processText.startsWith('مورس:')) {
             effectiveType = 'morse';
             processText = processText.replace(/^(morse:|مورس:)\s*/i, ''); // Remove prefix
             currentOriginalText = processText; // Update original text to match
         }
+        if (processText.startsWith('ارقام:') || processText.toLowerCase().startsWith('numbers:')) {
+            effectiveType = 'ارقام';
+            processText = processText.replace(/^(ارقام:|numbers:)\s*/i, '');
+            currentOriginalText = processText;
+        }
 
         // Check Type
         if (effectiveType.includes('مورس') || effectiveType.includes('morse')) {
             cipher = encipherMorse(processText);
+        } else if (effectiveType.includes('ارقام') || effectiveType.includes('numbers')) {
+            cipher = encipherNumbers(processText);
         } else {
             cipher = encipher(processText);
         }
+
+        // type code will be displayed separately in top-left
+        // (value stored via currentCipherType earlier)
 
         updateDisplay(cipher);
     } else {
@@ -249,6 +267,37 @@ function encipherMorse(text) {
     }
 
     return output.join(' ');
+}
+
+// Numbers-only Arabic cipher (no spaces preserved)
+function encipherNumbers(text) {
+    const chars = text.split('');
+    let output = [];
+    for (let char of chars) {
+        if (char === ' ') continue; // drop spaces
+        const code = ARABIC_NUMBER_MAP[char];
+        if (code) {
+            output.push(code);
+        }
+        // ignore any character that isn't in the map
+    }
+    return output.join('-');
+}
+
+// mapping of cipher types to short codes (for analysts)
+const TYPE_CODE = {
+    morse: 'A',        // مورس -> A
+    تشفير: 'B',        // default encoded map -> B
+    ارقام: 'C'         // numbers cipher -> C
+};
+
+function getTypeCode(ctype) {
+    if (!ctype) return '';
+    const key = ctype.toString().trim().toLowerCase();
+    if (key.includes('مورس') || key.includes('morse')) return TYPE_CODE.morse;
+    if (key.includes('ارقام') || key.includes('numbers')) return TYPE_CODE['ارقام'];
+    // anything else treated as general encryption
+    return TYPE_CODE['تشفير'];
 }
 
 function encipher(text) {
@@ -301,9 +350,15 @@ function encipher(text) {
 }
 
 function updateDisplay(text) {
+    const typeElem = document.getElementById('type-code');
     if (text) {
         DISPLAY_ELEMENT.textContent = text;
         DISPLAY_ELEMENT.style.setProperty('--text-direction', 'ltr');
+        // show type code
+        if (typeElem) {
+            const code = getTypeCode(currentCipherType);
+            typeElem.textContent = code || '';
+        }
 
         // Dynamic Font Sizing - More aggressive for mobile
         const isMobile = window.innerWidth < 768;
@@ -331,6 +386,7 @@ function updateDisplay(text) {
         DISPLAY_ELEMENT.textContent = DEFAULT_TEXT;
         DISPLAY_ELEMENT.style.setProperty('--text-direction', 'rtl');
         DISPLAY_ELEMENT.style.fontSize = '2.5rem'; // Reset
+        if (typeElem) typeElem.textContent = '';
     }
 }
 
