@@ -106,6 +106,22 @@ html {
     /* Etched look */
 }
 
+/* Type code indicator (top-left of screen) */
+.type-code {
+    position: absolute;
+    top: 4px;
+    left: 6px;
+    font-family: 'VT323', monospace;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #1a2416;
+    background: rgba(0,0,0,0.2);
+    padding: 2px 4px;
+    border-radius: 3px;
+    pointer-events: none;
+    z-index: 20;
+}
+
 /* Controls Area */
 .controls-area {
     flex: 1;
@@ -393,12 +409,16 @@ html {
 /* Countdown Timer */
 .countdown-timer {
     position: absolute;
-    bottom: 5px;
-    left: 10px;
-    font-size: 0.9rem;
-    color: #3a5a35;
+    bottom: 8px;
+    left: 12px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #1a2416;
+    background: rgba(0,0,0,0.3);
+    padding: 2px 6px;
+    border-radius: 4px;
     font-family: 'VT323', monospace;
-    opacity: 0.8;
+    opacity: 0.9;
     direction: ltr;
 }
 
